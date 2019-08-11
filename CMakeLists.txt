@@ -3,4 +3,4 @@ project(HW3)
 
 set(CMAKE_CXX_STANDARD 98)
 
-add_executable(HW4 main.cpp)
+add_executable(HW4 main.cpp files/Node.cpp Node.h)

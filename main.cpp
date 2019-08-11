@@ -1,10 +1,3 @@
-//
-// Ari can you hear me?
-//
-//2nd
-//Greetings form NJ
-
-
 #include <iostream>
 #include <stdexcept>
 #include <string>
