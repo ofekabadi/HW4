@@ -1,8 +1,8 @@
 //
-// Created by Adam on 06-Aug-19.
+// Ari can you hear me?
 //
 //
-// Created by RomG on 29/06/2019.
+//
 //
 #include <iostream>
 #include <stdexcept>
