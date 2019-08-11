@@ -2,8 +2,7 @@
 // Ari can you hear me?
 //
 //2nd test
-//
-//
+
 #include <iostream>
 #include <stdexcept>
 #include <string>
