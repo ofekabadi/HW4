@@ -66,36 +66,21 @@ Node<T,G>* Tree<T,G>::_searcher (Node<T,G>* currNode, const T& key) const{
 
 template <typename T, typename G>
 void Tree<T,G>::insert(const T& key,const G& item){
-    try {
+    try
+    {
         if(_searcher(_root, &key)!=NULL)
         {
             throw (1);
         }
         if(_root==NULL)
         {
-            _root=Node<T,G>(&key, &item, NULL);
+            _root= new Node<T,G>(&key, &item, NULL); //needs to be deleted
         }
         else
         {
-            Node<T,G>* y =_root, x=NULL;
-            while (y!=NULL)
-            {
-                x=y;
-                {
-                    if(key<y->getKey())
-                    {
-                        y=y->getLeftChild();
-                    }
-                    else if(key>y->getKey())
-                    {
-                        y=y->getRightChild();
-                    }
-                }
-            }
-
-
+            _inserter(&key, &item);
         }
-
+        return;
     }
 
     catch (1)
@@ -103,10 +88,41 @@ void Tree<T,G>::insert(const T& key,const G& item){
         cout<<"Key not unique"<<endl;            //literals
         return;
     }
-
-
-
 }
+
+
+template <typename T, typename G>
+void Tree<T,G>::inserter(const T& key,const G& item){
+    Node<T,G>* y =_root, x=NULL;
+    while (y!=NULL)
+    {
+        x=y;
+        {
+            if(key<y->getKey())
+            {
+                y=y->getLeftChild();
+            }
+            else if(key>y->getKey())
+            {
+                y=y->getRightChild();
+            }
+        }
+    }
+
+    Node<T,G>* newNode = new Node<T,G>(&key, &item, x);
+    if (key<x.getKey())
+    {
+        x.setLeft(newNode);
+    }
+    else
+    {
+        x.setRight(newNode);
+    }
+
+    return;
+}
+
+
 
 
 
@@ -119,8 +135,8 @@ void Tree<T,G>::inOrderTraversal() const{
     }
     _traverser(_root);
     return;
-
 }
+
 
 template <typename T, typename G>
 void Tree<T,G>::_traverser(Node<T,G>* currNode) const{
