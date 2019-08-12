@@ -35,9 +35,12 @@ public:
 
 private:
     Node<T,G>*_root;
+
     size_t _size;
 
+
     Node<T,G>* _searcher (Node<T,G>* currNode, const T& key) const;
+
     void _traverser(Node<T,G>* currNode) const;
 };
 

@@ -19,7 +19,8 @@ template <typename T, typename G>
 class Node
 {
 public:
-    inline Node(const T& key, const G& item, Node* parent=NULL): _parent(parent){};
+    inline Node(const T& key, const G& item, Node* parent=NULL): _parent(parent), _left
+            (NULL), _right(NULL){};
 
     inline Node* getLeftChild () const {return _left;}
 
@@ -28,6 +29,11 @@ public:
     inline const T& getKey() const {return _key;}
 
     inline const G& getItem() const {return _item;}
+
+    inline void setLeft(Node* node) {_left=node;}
+
+    inline void setRight(Node* node) {_right=node;}
+
 
 private:
     Node* _parent;
