@@ -16,6 +16,7 @@ using std::logic_error;
 using std::cin;
 using std::runtime_error;
 
+
 template <typename T, typename G>
 class Tree{
 public:
@@ -42,6 +43,9 @@ private:
     Node<T,G>* _searcher (Node<T,G>* currNode, const T& key) const;
 
     void _traverser(Node<T,G>* currNode) const;
-};
+
+    void _inserter(const T& key,const G& item);
+
+    };
 
 #endif
