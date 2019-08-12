@@ -8,12 +8,12 @@ template <typename T, typename G>
 bool Tree<T,G>::isEmpty() const {
     if(_size)
     {
-        cout<<"The tree is not empty"<<endl;  //literals
+        cout<<"The tree is not empty"<<endl;
         return false;
     }
     else
     {
-        cout<<"The tree is empty"<<endl;        //literals
+        cout<<"The tree is empty"<<endl;
         return true;
     }
 }
@@ -21,7 +21,7 @@ bool Tree<T,G>::isEmpty() const {
 
 template <typename T, typename G>
 size_t Tree<T,G>::size() const{
-    cout<<"Tree size: "<<_size<<endl;       //literals
+    cout<<"Tree size: "<<_size<<endl;
     return _size;
 }
 
@@ -32,22 +32,18 @@ Node<T,G>* Tree<T,G>::search (const T& key) const{
         Node<T,G>* result = _searcher(_root, &key);
         if(result==NULL)
         {
-            throw           //missing
+            throw;
         }
-        cout<<"found: "<<result->getItem()<<endl;   //literals
+        cout<<"found: "<<result->getItem()<<endl;
         return result;
     }
-    catch(){                //missing
-        cout<<"Key was not found"<<endl;    //literals
+    catch(int){
+        cout<<"Key was not found"<<endl;
     }
 }
 
 template <typename T, typename G>
 Node<T,G>* Tree<T,G>::_searcher (Node<T,G>* currNode, const T& key) const{
-    if(currNode==NULL)
-    {
-        return NULL;
-    }
     if(currNode->getKey()==key)
     {
         return currNode;
@@ -66,45 +62,14 @@ Node<T,G>* Tree<T,G>::_searcher (Node<T,G>* currNode, const T& key) const{
 
 template <typename T, typename G>
 void Tree<T,G>::insert(const T& key,const G& item){
-    try {
-        if(_searcher(_root, &key)!=NULL)
-        {
-            throw (1);
-        }
-        if(_root==NULL)
-        {
-            _root=Node<T,G>(&key, &item, NULL);
-        }
-        else
-        {
-            Node<T,G>* y =_root, x=NULL;
-            while (y!=NULL)
-            {
-                x=y;
-                {
-                    if(key<y->getKey())
-                    {
-                        y=y->getLeftChild();
-                    }
-                    else if(key>y->getKey())
-                    {
-                        y=y->getRightChild();
-                    }
-                }
-            }
-
-
-        }
-
-    }
-
-    catch (1)
+    if(key._root==NULL)
     {
-        cout<<"Key not unique"<<endl;            //literals
-        return;
+       key._root = item;
     }
-
-
+    else
+    {
+        =
+    }
 
 }
 
@@ -112,7 +77,7 @@ void Tree<T,G>::insert(const T& key,const G& item){
 
 template <typename T, typename G>
 void Tree<T,G>::inOrderTraversal() const{
-    cout<<"Binary search tree content:"<<endl;      //literals
+    cout<<"Binary search tree content:"<<endl;
     if (_root==NULL)
     {
         return;
@@ -124,8 +89,8 @@ void Tree<T,G>::inOrderTraversal() const{
 
 template <typename T, typename G>
 void Tree<T,G>::_traverser(Node<T,G>* currNode) const{
-    cout<<"Key:"<<currNode->getKey()<<" data: "<<currNode->getItem()<<endl;  //literals
-    if (currNode->getLeftChild()!=NULL)  //might be a code duplication...
+    cout<<"Key:"<<currNode->getKey()<<" data: "<<currNode->getItem()<<endl;
+    if (currNode->getLeftChild()!=NULL)
     {
         _traverser(currNode->getLeftChild());
     }
