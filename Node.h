@@ -19,8 +19,8 @@ template <typename T, typename G>
 class Node
 {
 public:
-    inline Node(const T& key, const G& item, Node* parent=NULL): _parent(parent), _left
-            (NULL), _right(NULL){};
+    inline Node(const T& key, const G& item, Node* parent=NULL): _key(key), _item(item),
+    _parent (parent), _left(NULL), _right(NULL){};
 
     inline Node* getLeftChild () const {return _left;}
 

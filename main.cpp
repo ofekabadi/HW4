@@ -20,7 +20,7 @@ const string consoleCommands[] = {"new", "insert", "deleteLeaf", "search", "empt
 typedef enum {INT=0, FLOAT, STRING} TreeTypes;
 const string treeTypes[] = {"int", "float", "string"};
 
-typedef enum {KEY, ITEM} TypesLocationErrors;
+typedef enum {KEY=0, ITEM} TypesLocationErrors;
 const string typesErrorLocation[] = {"Key", "Item"};
 
 const string EMPTY_TREE("empty");
@@ -70,7 +70,9 @@ void treeSession() {
 
         }
         else if (input == consoleCommands[SEARCH]){
-            // insert your code here
+            T key;
+            cin >> key;
+            tree.search(key);
         }
         else if (input == consoleCommands[EMPTY]){
             // insert your code here
@@ -79,7 +81,7 @@ void treeSession() {
             // insert your code here
         }
         else if (input == consoleCommands[TRAVEL]){
-            // insert your code here
+            tree.inOrderTraversal();
         }
         else {
             cerr << "Bad command" << endl;
@@ -93,16 +95,16 @@ void treeCreator(){
     string valueType;
     cin >> valueType;
     if (valueType == treeTypes[INT]){
-        // insert your code here
+        treeSession<T, int>();
     }
     else if (valueType == treeTypes[FLOAT]){
-        // insert your code here
+        treeSession<T, float>();
     }
     else if (valueType == treeTypes[STRING]){
-        // insert your code here
+        treeSession<T, string>();
     }
     else{
-        // insert your code here
+            errorThrower(ITEM, valueType);
     }
 }
 
@@ -111,22 +113,24 @@ int main() {
         string input;
         cin >> input;
         if (input == consoleCommands[NEW]) {
-            // insert your code here
+            string keyType;
+            cin >> keyType;
             if (keyType == treeTypes[INT]) {
-                // insert your code here
+                treeCreator<int>();
             }
             else if (keyType == treeTypes[FLOAT]){
-                // insert your code here
+                treeCreator<float>();
             }
             else if (keyType == treeTypes[STRING]){
-                // insert your code here
+                treeCreator<string>();
             }
             else{
                 errorThrower(KEY, keyType);
             }
         }
         else {
-            // insert your code here
+            cout<<"Bad Input: "<<input<<endl;
+            throw (runtime_error (input));
         }
     }
     catch( const runtime_error& error){
