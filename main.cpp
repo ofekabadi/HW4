@@ -13,6 +13,11 @@ using std::logic_error;
 using std::cin;
 using std::runtime_error;
 
+template <typename T, typename G>
+void treeSession( const T &keyType, const G &valueType);
+template <typename T>
+void treeCreator(const T &keyType);
+
 typedef enum {NEW=0, INSERT, DELETE, SEARCH, EMPTY, SIZE, TRAVEL, QUIT} CommandsEnum;
 const string consoleCommands[] = {"new", "insert", "deleteLeaf", "search", "empty",
                                   "size", "inorderTraversal", "quit"};
@@ -49,11 +54,11 @@ pair<Type1, Type2> getInputs(CommandsEnum command){
 }
 
 template <typename T, typename G>
-void treeSession() {
+void treeSession( const T &keyType, const G &valueType) {
     Tree<T, G> tree;
     string input;
     cin >> input;
-    while (input != consoleCommands[QUIT]){
+    while (input != consoleCommands[QUIT]){/*
         if (input == consoleCommands[INSERT]) {
             try{
                 pair<T,G> tempPair(getInputs<T, G>(INSERT));
@@ -66,40 +71,58 @@ void treeSession() {
             }
         }
         else if (input == consoleCommands[DELETE]){
-            // insert your code here
+            try{
+                pair<T,G> tempPair(getInputs<T, G>(DELETE));
+                T key(tempPair.first);
+                G item(tempPair.second);
+                tree.deleteLeaf(key);
+            }
+            catch (const logic_error& error){
+                cerr << error.what() << endl;
+            }
 
         }
         else if (input == consoleCommands[SEARCH]){
-            // insert your code here
+            try{
+                pair<T,G> tempPair(getInputs<T, G>(SEARCH));
+                T key(tempPair.first);
+                G item(tempPair.second);
+                tree.search(key);
+            }
+            catch (const logic_error& error){
+                cerr << error.what() << endl;
+            }
         }
-        else if (input == consoleCommands[EMPTY]){
-            // insert your code here
+        else*/ if (input == consoleCommands[EMPTY]){
+            tree.isEmpty();
         }
         else if (input == consoleCommands[SIZE]){
-            // insert your code here
+            tree.size();
         }
-        else if (input == consoleCommands[TRAVEL]){
-            // insert your code here
+        /*else if (input == consoleCommands[TRAVEL]){
+            tree.inOrderTraversal();
         }
         else {
             cerr << "Bad command" << endl;
-        }
+        }*/
         cin >> input;
     }
 }
 
 template <typename T>
-void treeCreator(){
-    string valueType;
+void treeCreator(const T &keyType){
+    string valueType(NULL);
+    int valueTypeInt(0);
+    float valueTypeFloat(0);
     cin >> valueType;
     if (valueType == treeTypes[INT]){
-        // insert your code here
+        treeSession(keyType,valueTypeInt);
     }
     else if (valueType == treeTypes[FLOAT]){
-        // insert your code here
+        treeSession(keyType,valueTypeFloat);
     }
     else if (valueType == treeTypes[STRING]){
-        // insert your code here
+        treeSession(keyType,valueType);
     }
     else{
         // insert your code here
@@ -109,17 +132,21 @@ void treeCreator(){
 int main() {
     try{
         string input;
+        string keyType;
+        int keyTypeInt;
+        float keyTypeFloat;
         cin >> input;
+        cin>>keyType;
         if (input == consoleCommands[NEW]) {
-            // insert your code here
+
             if (keyType == treeTypes[INT]) {
-                // insert your code here
+                 treeCreator(keyTypeInt);
             }
             else if (keyType == treeTypes[FLOAT]){
-                // insert your code here
+                    treeCreator(keyTypeFloat);
             }
             else if (keyType == treeTypes[STRING]){
-                // insert your code here
+                    treeCreator(keyType);
             }
             else{
                 errorThrower(KEY, keyType);
