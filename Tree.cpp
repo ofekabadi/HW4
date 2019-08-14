@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <string>
 #include "Tree.h"
-#include "Node.h"
+
 
 template <typename T, typename G>
 bool Tree<T,G>::isEmpty() const {
@@ -27,19 +27,19 @@ size_t Tree<T,G>::size() const{
 
 
 template <typename T, typename G>
-Node<T,G>* Tree<T,G>::search (const T& key) const{
+Node<T,G>* Tree<T,G>::search (const T& key) const{/*
     try {
         Node<T,G>* result = _searcher(_root, &key);
         if(result==NULL)
         {
-            throw           //missing
+            throw ;          //missing
         }
         cout<<"found: "<<result->getItem()<<endl;   //literals
         return result;
     }
-    catch(){                //missing
+    catch(int){                //missing
         cout<<"Key was not found"<<endl;    //literals
-    }
+    }*/
 }
 
 template <typename T, typename G>
@@ -66,11 +66,11 @@ Node<T,G>* Tree<T,G>::_searcher (Node<T,G>* currNode, const T& key) const{
 
 template <typename T, typename G>
 void Tree<T,G>::insert(const T& key,const G& item){
-    try
+
     {
         if(_searcher(_root, &key)!=NULL)
         {
-            throw (1);
+
         }
         if(_root==NULL)
         {
@@ -83,16 +83,12 @@ void Tree<T,G>::insert(const T& key,const G& item){
         return;
     }
 
-    catch (1)
-    {
-        cout<<"Key not unique"<<endl;            //literals
-        return;
-    }
+
 }
 
 
 template <typename T, typename G>
-void Tree<T,G>::inserter(const T& key,const G& item){
+void Tree<T,G>::_inserter(const T& key,const G& item){
     Node<T,G>* y =_root, x=NULL;
     while (y!=NULL)
     {
