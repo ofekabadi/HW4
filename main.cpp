@@ -53,8 +53,10 @@ void treeSession() {
     Tree<T, G> tree;
     string input;
     cin >> input;
-    while (input != consoleCommands[QUIT]){
-        if (input == consoleCommands[INSERT]) {
+    while (input != consoleCommands[QUIT]){   //NEEDS TO ADD A FUNCTION THAT DELETES
+        // ALL DYNAMICALLY ALOCATED NODES ON 'QUIT'
+        if (input == consoleCommands[INSERT]) {     //A BUG WHEN TRYING TO INSERT AN
+            // ALREADY EXISTING KEY
             try{
                 pair<T,G> tempPair(getInputs<T, G>(INSERT));
                 T key(tempPair.first);
@@ -65,22 +67,23 @@ void treeSession() {
                 cerr << error.what() << endl;
             }
         }
-        else if (input == consoleCommands[DELETE]){
+        else if (input == consoleCommands[DELETE]){         // NOT IMPLEMENTED
             // insert your code here
 
         }
-        else if (input == consoleCommands[SEARCH]){
+        else if (input == consoleCommands[SEARCH]){     //SOME BUG- DOESNT FIND
+            // EVERYTHING. ALSO, NO ERROR HANDLING FOR SEARCH NON-EXISTING KEY.
             T key;
             cin >> key;
             tree.search(key);
         }
-        else if (input == consoleCommands[EMPTY]){
-            // insert your code here
+        else if (input == consoleCommands[EMPTY]){            //WORKS
+            tree.isEmpty();
         }
-        else if (input == consoleCommands[SIZE]){
-            // insert your code here
+        else if (input == consoleCommands[SIZE]){           //WORKS
+            tree.size();
         }
-        else if (input == consoleCommands[TRAVEL]){
+        else if (input == consoleCommands[TRAVEL]){            //WORKS (i think)
             tree.inOrderTraversal();
         }
         else {
