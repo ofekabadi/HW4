@@ -67,8 +67,10 @@ void treeSession() {
                 cerr << error.what() << endl;
             }
         }
-        else if (input == consoleCommands[DELETE]){         // NOT IMPLEMENTED
-            // insert your code here
+        else if (input == consoleCommands[DELETE]){
+            T key;
+            cin >> key;
+            tree.deleteLeaf(key);
 
         }
         else if (input == consoleCommands[SEARCH]){     //SOME BUG- DOESNT FIND

@@ -211,6 +211,32 @@ void Tree<T,G>::_traverser(Node<T,G>* currNode) const{
     return;
 }
 
+template <typename T, typename G>
+void Tree<T,G>::deleteLeaf(const T& key)//not working yet, will continue tomorrow
+{
+    try
+    {
+        cout<<_searcher(_root,key)<<endl;
 
+        if (((_searcher(_root, key)) != NULL) && ((_searcher(_root,key)->getLeftChild()
+        ) == NULL) && ((_searcher(_root,key)->getRightChild()) == NULL))
+        {cout<<"here"<<endl;
+
+            delete this->_searcher(_root,key);
+        }
+    }
+    catch (runtime_error &error)
+    {
+        cerr << error.what() << endl;
+        cout<<"Internal node was found "<<endl;            //LITERALS
+        return;
+    }
+   /* catch (runtime_error &error)
+    {
+        cerr << error.what() << endl;
+        cout<<"Key was not found "<<endl;            //LITERALS
+        return;
+    }*/
+}
 
 #endif
