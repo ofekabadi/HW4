@@ -48,7 +48,7 @@ private:
 
     void _inserter(const T& key,const G& item);
 
-    inline void _error(const string& err){throw runtime_error(err);}
+    inline void _error(const string& err){throw (runtime_error(err));}
 
 };
 
@@ -80,16 +80,17 @@ template <typename T, typename G>
 void Tree<T,G>::insert(const T& key, const G& item){
     try
     {
-        if(_searcher(_root, key)!=NULL)       //if key already exists
-        {
-            _error("Key not unique");       //A PROBLEM AROUND HERE
-        }
         if(_root==NULL)         //if tree is empty
         {
             _root = new Node<T,G>(key, item, NULL); //NEEDS TO BE DELETED
             _size++;
             return;
         }
+        if(_searcher(_root, key)!=NULL)       //if key already exists
+        {
+            _error("Key not unique");       //A PROBLEM AROUND HERE //LITERALS
+        }
+
         else
         {
             _inserter(key, item);
@@ -101,7 +102,6 @@ void Tree<T,G>::insert(const T& key, const G& item){
     catch (runtime_error &error)
     {
         cerr << error.what() << endl;
-        cout<<"Key not unique"<<endl;            //LITERALS
         return;
     }
 }
@@ -146,7 +146,7 @@ Node<T,G>* Tree<T,G>::search (const T& key) const{
         Node<T,G>* result = _searcher(_root, key);
         if(result==NULL)
         {
-            cout<<"NULL"<<endl;
+            throw (runtime_error ("Key was not found"));   //LITERALS
            // _error("Key was not found");  NOT WORKING
         }
         cout<<"found: "<<result->getItem()<<endl;   //LITERALS
@@ -155,7 +155,6 @@ Node<T,G>* Tree<T,G>::search (const T& key) const{
     catch(runtime_error &error)
     {
         cerr << error.what() << endl;
-        cout<<"Key was not found"<<endl;    //LITERALS
         return NULL;
     }
 }
@@ -164,23 +163,19 @@ Node<T,G>* Tree<T,G>::search (const T& key) const{
 
 template <typename T, typename G>
 Node<T,G>* Tree<T,G>::_searcher (Node<T,G>* currNode, const T& key) const{
-    if(currNode==NULL)
-    {
-        return NULL;
-    }
+
     if(currNode->getKey()==key)
     {
         return currNode;
     }
-    if(currNode->getLeftChild()!=NULL)
+    else if(key < currNode->getKey() && currNode->getLeftChild()!=NULL)
     {
         _searcher(currNode->getLeftChild(), key);
     }
-    if(currNode->getRightChild()!=NULL)
+    else if(key > currNode->getKey() && currNode->getRightChild()!=NULL)
     {
         _searcher(currNode->getRightChild(), key);
     }
-    return NULL;
 }
 
 

@@ -55,8 +55,7 @@ void treeSession() {
     cin >> input;
     while (input != consoleCommands[QUIT]){   //NEEDS TO ADD A FUNCTION THAT DELETES
         // ALL DYNAMICALLY ALOCATED NODES ON 'QUIT'
-        if (input == consoleCommands[INSERT]) {     //A BUG WHEN TRYING TO INSERT AN
-            // ALREADY EXISTING KEY
+        if (input == consoleCommands[INSERT]) {     //WORKS
             try{
                 pair<T,G> tempPair(getInputs<T, G>(INSERT));
                 T key(tempPair.first);
@@ -73,8 +72,7 @@ void treeSession() {
             tree.deleteLeaf(key);
 
         }
-        else if (input == consoleCommands[SEARCH]){     //SOME BUG- DOESNT FIND
-            // EVERYTHING. ALSO, NO ERROR HANDLING FOR SEARCH NON-EXISTING KEY.
+        else if (input == consoleCommands[SEARCH]){     //WORKS
             T key;
             cin >> key;
             tree.search(key);
