@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <vector>
 #include "Node.h"
 #include "Tree.cpp"
 
@@ -17,6 +18,8 @@ using std::endl;
 using std::logic_error;
 using std::cin;
 using std::runtime_error;
+using std::vector;
+
 
 
 template <typename T, typename G>
@@ -36,17 +39,24 @@ public:
 
     void inOrderTraversal() const;
 
+    void quit();
+
 private:
     Node<T,G>*_root;
 
     size_t _size;
 
 
+
     Node<T,G>* _searcher (Node<T,G>* currNode, const T& key) const;
+
+    void _inserter(const T& key,const G& item);
+
+    void _deleter(Node<T,G>* targetedLeaf, const T& key);
 
     void _traverser(Node<T,G>* currNode) const;
 
-    void _inserter(const T& key,const G& item);
+    void _quitter(Node<T,G>* currNode);
 
     inline void _error(const string& err){throw (runtime_error(err));}
 
@@ -82,13 +92,13 @@ void Tree<T,G>::insert(const T& key, const G& item){
     {
         if(_root==NULL)         //if tree is empty
         {
-            _root = new Node<T,G>(key, item, NULL); //NEEDS TO BE DELETED
+            _root = new Node<T,G>(key, item, NULL) ;
             _size++;
             return;
         }
         if(_searcher(_root, key)!=NULL)       //if key already exists
         {
-            _error("Key not unique");       //A PROBLEM AROUND HERE //LITERALS
+            _error("Key not unique");       //LITERALS
         }
 
         else
@@ -134,8 +144,6 @@ void Tree<T,G>::_inserter(const T& key, const G& item){
     {
         x->setRight(newNode);
     }
-
-    return;
 }
 
 
@@ -206,32 +214,82 @@ void Tree<T,G>::_traverser(Node<T,G>* currNode) const{
     return;
 }
 
+
 template <typename T, typename G>
-void Tree<T,G>::deleteLeaf(const T& key)//not working yet, will continue tomorrow
+void Tree<T,G>::deleteLeaf(const T& key)//IT'S WORKING, BUT THERE IS A PROBLEM
+// WITH DELETING THE TREE ALL THE WAY UP TO THE _ROOT, SINCE THE ROOT IS NOT DELETABLE
+//  OR REASSIGNABLE (TO NULL)... MAYBE WE DON'T REALLY NEED TO DELETE IT. IF YOU CANT
+//  FIND A SOLUTION I'LL ASK ADAM ABOUT IT.
+
 {
     try
     {
-        cout<<_searcher(_root,key)<<endl;
+        Node<T,G>* result = _searcher(_root,key);
+        if(result==NULL)
+        {
+            throw (runtime_error ("Key was not found"));   //LITERALS
+        }
+        else if((result->getLeftChild() != NULL) || (result->getRightChild() != NULL))
+        {
+            throw (runtime_error ("The node is not a leaf!"));   //LITERALS
+        }
 
-        if (((_searcher(_root, key)) != NULL) && ((_searcher(_root,key)->getLeftChild()
-        ) == NULL) && ((_searcher(_root,key)->getRightChild()) == NULL))
-        {cout<<"here"<<endl;
-
-            delete this->_searcher(_root,key);
+        else if ( (result != NULL) && (result->getLeftChild() == NULL) &&
+        (result->getRightChild() == NULL))
+        {
+            _deleter(result, key);
         }
     }
+
     catch (runtime_error &error)
     {
         cerr << error.what() << endl;
-        cout<<"Internal node was found "<<endl;            //LITERALS
         return;
     }
-   /* catch (runtime_error &error)
+}
+
+
+
+template <typename T, typename G>
+void Tree<T,G>::_deleter(Node<T,G>* targetedLeaf, const T& key){
+    if (key < targetedLeaf->getParent()->getKey())
     {
-        cerr << error.what() << endl;
-        cout<<"Key was not found "<<endl;            //LITERALS
+        (targetedLeaf->getParent()) ->setLeft(NULL);
+    }
+    else
+    {
+        (targetedLeaf->getParent()) ->setRight(NULL);
+    }
+    delete targetedLeaf;
+}
+
+
+template <typename T, typename G>
+void Tree<T,G>::quit(){
+    if (_root==NULL)
+    {
         return;
-    }*/
+    }
+
+    else
+    {
+        _quitter(_root);
+        delete _root;
+    }
+}
+
+template <typename T, typename G>
+void Tree<T,G>::_quitter(Node<T, G> *currNode){
+    if(currNode->getLeftChild()!=NULL)
+    {
+        _quitter(currNode->getLeftChild());
+        delete(currNode->getLeftChild());
+    }
+    if(currNode->getRightChild()!=NULL)
+    {
+        _quitter(currNode->getRightChild());
+        delete(currNode->getRightChild());
+    }
 }
 
 #endif

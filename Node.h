@@ -26,6 +26,8 @@ public:
 
     inline Node* getRightChild () const {return _right;}
 
+    inline Node* getParent () const {return _parent;}
+
     inline const T& getKey() const {return _key;}
 
     inline const G& getItem() const {return _item;}
@@ -33,6 +35,7 @@ public:
     inline void setLeft(Node* node) {_left=node;}
 
     inline void setRight(Node* node) {_right=node;}
+
 
 
 private:

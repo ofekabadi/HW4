@@ -53,9 +53,10 @@ void treeSession() {
     Tree<T, G> tree;
     string input;
     cin >> input;
-    while (input != consoleCommands[QUIT]){   //NEEDS TO ADD A FUNCTION THAT DELETES
-        // ALL DYNAMICALLY ALOCATED NODES ON 'QUIT'
-        if (input == consoleCommands[INSERT]) {     //WORKS
+    while (input != consoleCommands[QUIT]){
+        if (input == consoleCommands[INSERT]) {     //WORKS, BUT CURRENTLY CAN'T DISCERN
+            // BETWEEN RIGHT AND WRONG INPUT TYPES, E.G. YOU CAN GIVE A FLOAT WHILE
+            // WAITING FOR AN INT
             try{
                 pair<T,G> tempPair(getInputs<T, G>(INSERT));
                 T key(tempPair.first);
@@ -66,7 +67,8 @@ void treeSession() {
                 cerr << error.what() << endl;
             }
         }
-        else if (input == consoleCommands[DELETE]){
+        else if (input == consoleCommands[DELETE]){     //WORKS (SUPPOSED TO BE
+            // 'WORKING',ISN'T IT?      SEE NOTES ON FUNCTION...
             T key;
             cin >> key;
             tree.deleteLeaf(key);
@@ -83,7 +85,7 @@ void treeSession() {
         else if (input == consoleCommands[SIZE]){           //WORKS
             tree.size();
         }
-        else if (input == consoleCommands[TRAVEL]){            //WORKS (i think)
+        else if (input == consoleCommands[TRAVEL]){            //WORKS
             tree.inOrderTraversal();
         }
         else {
@@ -91,6 +93,8 @@ void treeSession() {
         }
         cin >> input;
     }
+    tree.quit();    //deletes all nodes on 'quit session'
+                    //NEED TO BE CHECKED IN A MEMORY LEAKAGE TEST
 }
 
 template <typename T>
