@@ -165,7 +165,6 @@ Node<T,G>* Tree<T,G>::search (const T& key) const{
         if(result==NULL)
         {
             throw (runtime_error (KEY_NOT_FOUND));
-           // _error("Key was not found");  NOT WORKING
         }
         cout<<PRINT_FOUND<<key<<DATA<<result->getItem()<<endl;
         return result;
