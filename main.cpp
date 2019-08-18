@@ -1,6 +1,6 @@
+#include <string>
 #include <iostream>
 #include <stdexcept>
-#include <string>
 #include "Tree.h"
 
 using std::string;
@@ -26,6 +26,9 @@ const string typesErrorLocation[] = {"Key", "Item"};
 const string EMPTY_TREE("empty");
 const string NOT_EMPTY_TREE("not ");
 const string FOUND = "found:";
+const string BAD_COMMAND = "Bad command";
+const string BAD_INPUT = "Bad Input: ";
+const string BAD_INPUT_TYPE = "Bad input type!";
 
 void errorThrower(TypesLocationErrors loc, const string& erroredType){
     throw runtime_error("Bad " + typesErrorLocation[loc] + " Type: " + erroredType);
@@ -33,13 +36,21 @@ void errorThrower(TypesLocationErrors loc, const string& erroredType){
 
 template<typename Type1>
 Type1 getInputs(CommandsEnum command){
-    Type1 input;
-    cin >> input;
-    if (cin.fail()){
-        // insert your code here
+    try{
+        Type1 input;
+        cin >> input;
+        //cout<<"input: "<<input<<endl;
+        if (cin.fail()){
+            throw (runtime_error (BAD_INPUT_TYPE));
+        }
+        return input;
     }
-    return input;
+
+    catch( const runtime_error& error){
+        cerr << error.what() << endl;
+    }
 }
+
 
 template<typename Type1, typename Type2>
 pair<Type1, Type2> getInputs(CommandsEnum command){
@@ -63,38 +74,38 @@ void treeSession() {
                 G item(tempPair.second);
                 tree.insert(key, item);
             }
+
             catch (const logic_error& error){
                 cerr << error.what() << endl;
             }
+
         }
-        else if (input == consoleCommands[DELETE]){     //WORKS (SUPPOSED TO BE
-            // 'WORKING',ISN'T IT?      SEE NOTES ON FUNCTION...
+        else if (input == consoleCommands[DELETE]){
             T key;
             cin >> key;
             tree.deleteLeaf(key);
 
         }
-        else if (input == consoleCommands[SEARCH]){     //WORKS
+        else if (input == consoleCommands[SEARCH]){
             T key;
             cin >> key;
             tree.search(key);
         }
-        else if (input == consoleCommands[EMPTY]){            //WORKS
+        else if (input == consoleCommands[EMPTY]){
             tree.isEmpty();
         }
-        else if (input == consoleCommands[SIZE]){           //WORKS
+        else if (input == consoleCommands[SIZE]){
             tree.size();
         }
-        else if (input == consoleCommands[TRAVEL]){            //WORKS
+        else if (input == consoleCommands[TRAVEL]){
             tree.inOrderTraversal();
         }
         else {
-            cerr << "Bad command" << endl;
+            cerr << BAD_COMMAND << endl;
         }
         cin >> input;
     }
-    tree.quit();    //deletes all nodes on 'quit session'
-                    //NEED TO BE CHECKED IN A MEMORY LEAKAGE TEST
+    tree.quit();
 }
 
 template <typename T>
@@ -136,8 +147,7 @@ int main() {
             }
         }
         else {
-            cout<<"Bad Input: "<<input<<endl;
-            throw (runtime_error (input));
+            throw (runtime_error (BAD_COMMAND));
         }
     }
     catch( const runtime_error& error){
