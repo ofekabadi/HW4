@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include "Node.h"
-#include "Tree.cpp"
+
 
 
 using std::string;
@@ -30,26 +30,36 @@ const string PRINT_KEY("Key: ");
 const string DATA(" data: ");
 const string TREE_CONTENT("Binary search tree content:");
 const string PRINT_FOUND("found: ");
-
+//Creates binary tree with nodes, which stores an item according to the key number.
 
 template <typename T, typename G>
 class Tree{
 public:
+    //Constructor
     inline Tree(): _size(0), _root(NULL){}
 
+    //checks if tree has no nodes
     bool isEmpty() const;
 
+    //finds tree size
     size_t size() const;
 
+    //searches for specific key, returns node.
     Node<T,G>* search (const T& key) const;
 
+    //create new node, correct location within the tree, if empty inserts new node
     void insert(const T& key,const G& item);
 
+    //deletes node if is a leaf and if it exists.
     void deleteLeaf(const T& key);
 
+    //prints all nodes(key,item) in tree recursively
     void inOrderTraversal() const;
-
+    // ends program
     void quit();
+
+    //Destructor
+    ~Tree(){}
 
 private:
     Node<T,G>*_root;
@@ -225,10 +235,7 @@ void Tree<T,G>::_traverser(Node<T,G>* currNode) const{
 
 
 template <typename T, typename G>
-void Tree<T,G>::deleteLeaf(const T& key)//IT'S WORKING, BUT THERE IS A PROBLEM
-// WITH DELETING THE TREE ALL THE WAY UP TO THE _ROOT, SINCE THE ROOT IS NOT DELETABLE
-//  OR REASSIGNABLE (TO NULL)... MAYBE WE DON'T REALLY NEED TO DELETE IT. IF YOU CANT
-//  FIND A SOLUTION I'LL ASK ADAM ABOUT IT.
+void Tree<T,G>::deleteLeaf(const T& key)
 
 {
     try

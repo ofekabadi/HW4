@@ -3,4 +3,4 @@ project(HW3)
 
 set(CMAKE_CXX_STANDARD 98)
 
-add_executable(HW4 main.cpp Node.h Tree.h Tree.cpp)
+add_executable(HW4 main.cpp Node.h Tree.h)

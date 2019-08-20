@@ -39,7 +39,7 @@ Type1 getInputs(CommandsEnum command){
     try{
         Type1 input;
         cin >> input;
-        //cout<<"input: "<<input<<endl;
+
         if (cin.fail()){
             throw (runtime_error (BAD_INPUT_TYPE));
         }
@@ -65,9 +65,7 @@ void treeSession() {
     string input;
     cin >> input;
     while (input != consoleCommands[QUIT]){
-        if (input == consoleCommands[INSERT]) {     //WORKS, BUT CURRENTLY CAN'T DISCERN
-            // BETWEEN RIGHT AND WRONG INPUT TYPES, E.G. YOU CAN GIVE A FLOAT WHILE
-            // WAITING FOR AN INT
+        if (input == consoleCommands[INSERT]) {
             try{
                 pair<T,G> tempPair(getInputs<T, G>(INSERT));
                 T key(tempPair.first);
