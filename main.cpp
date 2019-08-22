@@ -37,16 +37,15 @@ void errorThrower(TypesLocationErrors loc, const string& erroredType){
 template<typename Type1>
 Type1 getInputs(CommandsEnum command){
     try{
-        Type1 input;
-        cin >> input;
-
+       Type1 input;
         if (cin.fail()){
             throw (runtime_error (BAD_INPUT_TYPE));
         }
         return input;
     }
 
-    catch( const runtime_error& error){
+    catch( const logic_error& error)
+    {
         cerr << error.what() << endl;
     }
 }
@@ -128,6 +127,10 @@ int main() {
     try{
         string input;
         cin >> input;
+        if(input != consoleCommands[NEW])
+        {
+            throw runtime_error(BAD_INPUT + input);
+        }
         if (input == consoleCommands[NEW]) {
             string keyType;
             cin >> keyType;
@@ -143,9 +146,6 @@ int main() {
             else{
                 errorThrower(KEY, keyType);
             }
-        }
-        else {
-            throw (runtime_error (BAD_COMMAND));
         }
     }
     catch( const runtime_error& error){
