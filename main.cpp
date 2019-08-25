@@ -3,6 +3,9 @@
 #include <stdexcept>
 #include "Tree.h"
 
+#define N 128 //a large number
+#define NEW_LINE '\n'
+
 using std::string;
 using std::pair;
 using std::make_pair;
@@ -34,18 +37,24 @@ void errorThrower(TypesLocationErrors loc, const string& erroredType){
     throw runtime_error("Bad " + typesErrorLocation[loc] + " Type: " + erroredType);
 }
 
+bool badInput = false;
+
 template<typename Type1>
 Type1 getInputs(CommandsEnum command){
     try{
        Type1 input;
+        cin >> input;
         if (cin.fail()){
+            cin.clear();
+            cin.ignore(N, NEW_LINE);
+            badInput = true;
             throw (runtime_error (BAD_INPUT_TYPE));
         }
         return input;
     }
-
-    catch( const logic_error& error)
+    catch (runtime_error &error)
     {
+
         cerr << error.what() << endl;
     }
 }
@@ -66,16 +75,24 @@ void treeSession() {
     while (input != consoleCommands[QUIT]){
         if (input == consoleCommands[INSERT]) {
             try{
+                badInput = false;
                 pair<T,G> tempPair(getInputs<T, G>(INSERT));
                 T key(tempPair.first);
                 G item(tempPair.second);
-                tree.insert(key, item);
+
+                if(!badInput)
+                {
+                    tree.insert(key, item);
+                }
+                else
+                {
+                    cin.ignore(N, NEW_LINE);
+                }
             }
 
             catch (const logic_error& error){
                 cerr << error.what() << endl;
             }
-
         }
         else if (input == consoleCommands[DELETE]){
             T key;
@@ -98,6 +115,7 @@ void treeSession() {
             tree.inOrderTraversal();
         }
         else {
+            cin.ignore(N, NEW_LINE);
             cerr << BAD_COMMAND << endl;
         }
         cin >> input;

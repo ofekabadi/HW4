@@ -26,10 +26,10 @@ const string PRINT_EMPTY_TREE("The tree is empty");
 const string KEY_NOT_UNIQUE("Key not unique");
 const string KEY_NOT_FOUND("Key was not found");
 const string NODE_NOT_LEAF("The node is not a leaf!");
-const string PRINT_KEY("Key: ");
-const string DATA(" data: ");
+const string PRINT_KEY("key: ");
+const string DATA("\t data:");
 const string TREE_CONTENT("Binary search tree content:");
-const string PRINT_FOUND("found: ");
+const string PRINT_FOUND("found:");
 //Creates binary tree with nodes, which stores an item according to the key number.
 
 template <typename T, typename G>
@@ -55,6 +55,7 @@ public:
 
     //prints all nodes(key,item) in tree recursively
     void inOrderTraversal() const;
+
     // ends program
     void quit();
 
@@ -67,7 +68,7 @@ private:
     size_t _size;
 
 
-
+    //those are the functions that virtually make the operations
     Node<T,G>* _searcher (Node<T,G>* currNode, const T& key) const;
 
     void _inserter(const T& key,const G& item);
@@ -176,7 +177,7 @@ Node<T,G>* Tree<T,G>::search (const T& key) const{
         {
             throw (runtime_error (KEY_NOT_FOUND));
         }
-        cout<<PRINT_FOUND<<key<<DATA<<result->getItem()<<endl;
+        cout<<PRINT_FOUND<<PRINT_KEY<<key<<DATA<<result->getItem()<<endl;
         return result;
     }
     catch(runtime_error &error)
@@ -290,7 +291,6 @@ void Tree<T,G>::quit(){
     else
     {
         _quitter(_root);
-        delete _root;
     }
 }
 
