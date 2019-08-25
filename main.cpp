@@ -33,6 +33,7 @@ const string BAD_COMMAND = "Bad command";
 const string BAD_INPUT = "Bad Input: ";
 const string BAD_INPUT_TYPE = "Bad input type!";
 
+
 void errorThrower(TypesLocationErrors loc, const string& erroredType){
     throw runtime_error("Bad " + typesErrorLocation[loc] + " Type: " + erroredType);
 }
@@ -141,32 +142,39 @@ void treeCreator(){
     }
 }
 
-int main() {
-    try{
-        string input;
-        cin >> input;
-        if(input != consoleCommands[NEW])
-        {
-            throw runtime_error(BAD_INPUT + input);
+int main(){
+    string input;
+    bool correctInput(true);
+    while(cin >> input && correctInput )
+    {
+        try {
+
+
+            if (input != consoleCommands[NEW]) {
+                throw runtime_error(BAD_INPUT + input);
+            }
+            correctInput = false;
+            if (input == consoleCommands[NEW]) {
+                string keyType;
+                cin >> keyType;
+                if (keyType == treeTypes[INT]) {
+                    treeCreator<int>();
+                } else if (keyType == treeTypes[FLOAT]) {
+                    treeCreator<float>();
+                } else if (keyType == treeTypes[STRING]) {
+                    treeCreator<string>();
+                } else {
+                    errorThrower(KEY, keyType);
+                }
+            }
         }
-        if (input == consoleCommands[NEW]) {
-            string keyType;
-            cin >> keyType;
-            if (keyType == treeTypes[INT]) {
-                treeCreator<int>();
-            }
-            else if (keyType == treeTypes[FLOAT]){
-                treeCreator<float>();
-            }
-            else if (keyType == treeTypes[STRING]){
-                treeCreator<string>();
-            }
-            else{
-                errorThrower(KEY, keyType);
-            }
+
+        catch (const runtime_error &error) {
+            cerr << error.what() << endl;
+            correctInput = true;
         }
+        if(correctInput == false)
+        {break;}
     }
-    catch( const runtime_error& error){
-        cerr << error.what() << endl;
-    }
+    return 0;
 }
