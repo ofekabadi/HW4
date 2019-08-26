@@ -148,8 +148,6 @@ int main(){
     while(cin >> input && correctInput )
     {
         try {
-
-
             if (input != consoleCommands[NEW]) {
                 throw runtime_error(BAD_INPUT + input);
             }
@@ -174,7 +172,10 @@ int main(){
             correctInput = true;
         }
         if(correctInput == false)
-        {break;}
+        {
+            break;
+        }
     }
+
     return 0;
 }

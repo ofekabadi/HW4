@@ -291,6 +291,7 @@ void Tree<T,G>::quit(){
     else
     {
         _quitter(_root);
+        delete _root;
     }
 }
 
